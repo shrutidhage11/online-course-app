@@ -32,9 +32,9 @@ class QuestionInline(admin.StackedInline):
 
 # Question admin configuration
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ("question_text", "course", "grade")
-    search_fields = ("question_text",)
+    list_display = ('question_text', 'course', 'grade')
     inlines = [ChoiceInline]
+    search_fields = ('question_text',)
 
 
 # Lesson admin configuration

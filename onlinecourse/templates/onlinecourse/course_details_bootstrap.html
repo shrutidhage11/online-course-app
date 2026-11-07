@@ -3,21 +3,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>{{ course.name }} - Course Details</title>
 
-    <!-- Bootstrap CSS -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 </head>
 
 <body class="bg-light">
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">
                 Online Course
@@ -25,11 +23,13 @@
         </div>
     </nav>
 
+    <!-- Main Content -->
     <div class="container py-5">
 
         <!-- Course Details Card -->
-        <div class="card shadow mb-4">
+        <div class="card shadow-sm mb-4">
             <div class="card-body p-4">
+
                 <h1 class="card-title text-primary mb-3">
                     {{ course.name }}
                 </h1>
@@ -37,55 +37,60 @@
                 <p class="card-text text-muted">
                     {{ course.description }}
                 </p>
+
+                <span class="badge bg-primary">
+                    Course Details
+                </span>
+
             </div>
         </div>
 
         <!-- Lessons Section -->
-        <h2 class="mb-4 text-dark">Course Lessons</h2>
-
-        <div class="row">
-
-            {% for lesson in course.lesson_set.all %}
-
-            <div class="col-md-6 mb-4">
-
-                <div class="card h-100 shadow-sm">
-
-                    <div class="card-header bg-primary text-white">
-                        Lesson {{ lesson.order }}
-                    </div>
-
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            {{ lesson.title }}
-                        </h5>
-
-                        <p class="card-text">
-                            {{ lesson.content }}
-                        </p>
-                    </div>
-
-                </div>
-
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">Course Lessons</h3>
             </div>
 
-            {% empty %}
+            <div class="card-body">
 
-            <div class="col-12">
-                <div class="alert alert-info">
-                    No lessons available for this course.
-                </div>
+                {% for lesson in course.lesson_set.all %}
+
+                    <div class="card mb-3 border">
+                        <div class="card-body">
+
+                            <h5 class="card-title text-primary">
+                                Lesson {{ lesson.order }}: {{ lesson.title }}
+                            </h5>
+
+                            <p class="card-text">
+                                {{ lesson.content }}
+                            </p>
+
+                        </div>
+                    </div>
+
+                {% empty %}
+
+                    <div class="alert alert-info">
+                        No lessons are available for this course yet.
+                    </div>
+
+                {% endfor %}
+
             </div>
-
-            {% endfor %}
-
         </div>
 
     </div>
 
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+        <p class="mb-0">
+            Online Course Application
+        </p>
+    </footer>
+
     <!-- Bootstrap JavaScript -->
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
     </script>
 
 </body>

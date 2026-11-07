@@ -1,3 +1,4 @@
+
 from django.contrib import admin
 
 from .models import (
@@ -11,46 +12,46 @@ from .models import (
 )
 
 
-# Inline for adding lessons inside a course
+# Inline for lessons inside a course
 class LessonInline(admin.StackedInline):
     model = Lesson
     extra = 1
 
 
-# Inline for adding choices inside a question
+# Inline for choices inside a question
 class ChoiceInline(admin.TabularInline):
     model = Choice
     extra = 2
 
 
-# Inline for adding questions inside a course
+# Inline for questions inside a course
 class QuestionInline(admin.StackedInline):
     model = Question
     extra = 1
 
 
-# Admin configuration for Question
+# Question admin configuration
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ("question_text", "course", "grade")
-    inlines = [ChoiceInline]
     search_fields = ("question_text",)
+    inlines = [ChoiceInline]
 
 
-# Admin configuration for Lesson
+# Lesson admin configuration
 class LessonAdmin(admin.ModelAdmin):
     list_display = ("title", "course", "order")
     list_filter = ("course",)
     search_fields = ("title",)
 
 
-# Admin configuration for Course
+# Course admin configuration
 class CourseAdmin(admin.ModelAdmin):
     list_display = ("name", "total_enrollment", "pub_date")
     search_fields = ("name",)
     inlines = [LessonInline, QuestionInline]
 
 
-# Admin configuration for Enrollment
+# Enrollment admin configuration
 class EnrollmentAdmin(admin.ModelAdmin):
     list_display = ("user", "course", "date_enrolled", "mode", "rating")
     list_filter = ("mode", "course")

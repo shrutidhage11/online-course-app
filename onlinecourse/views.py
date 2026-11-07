@@ -40,7 +40,10 @@ def submit(request, course_id):
             submission_id=submission.id
         )
 
-    return redirect("onlinecourse:course_details", course_id=course.id)
+    return redirect(
+        "onlinecourse:course_details",
+        course_id=course.id
+    )
 
 
 @login_required
@@ -55,6 +58,7 @@ def show_exam_result(request, course_id, submission_id):
     )
 
     questions = Question.objects.filter(course=course)
+
     selected_ids = list(
         submission.choices.values_list("id", flat=True)
     )
@@ -81,6 +85,7 @@ def show_exam_result(request, course_id, submission_id):
         "total_grade": total_grade,
         "percentage_score": percentage,
         "choices": submission.choices.all(),
+        "selected_ids": selected_ids,
     }
 
     return render(

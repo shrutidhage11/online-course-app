@@ -1,49 +1,92 @@
 
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ course.name }} - Online Course</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+    <title>{{ course.name }} - Course Details</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
 </head>
+
 <body class="bg-light">
 
-<nav class="navbar navbar-dark bg-primary">
-    <div class="container">
-        <a class="navbar-brand" href="#">OnlineCourse</a>
-    </div>
-</nav>
-
-<div class="container py-5">
-
-    <div class="card shadow-sm mb-4">
-        <div class="card-body">
-            <h1 class="text-primary">{{ course.name }}</h1>
-            <p class="text-muted">{{ course.description }}</p>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                Online Course
+            </a>
         </div>
+    </nav>
+
+    <div class="container py-5">
+
+        <!-- Course Details Card -->
+        <div class="card shadow mb-4">
+            <div class="card-body p-4">
+                <h1 class="card-title text-primary mb-3">
+                    {{ course.name }}
+                </h1>
+
+                <p class="card-text text-muted">
+                    {{ course.description }}
+                </p>
+            </div>
+        </div>
+
+        <!-- Lessons Section -->
+        <h2 class="mb-4 text-dark">Course Lessons</h2>
+
+        <div class="row">
+
+            {% for lesson in course.lesson_set.all %}
+
+            <div class="col-md-6 mb-4">
+
+                <div class="card h-100 shadow-sm">
+
+                    <div class="card-header bg-primary text-white">
+                        Lesson {{ lesson.order }}
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {{ lesson.title }}
+                        </h5>
+
+                        <p class="card-text">
+                            {{ lesson.content }}
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <div class="col-12">
+                <div class="alert alert-info">
+                    No lessons available for this course.
+                </div>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
     </div>
 
-    <h2 class="mb-3">Course Lessons</h2>
+    <!-- Bootstrap JavaScript -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
 
-    <div class="list-group">
-        {% for lesson in course.lesson_set.all %}
-            <div class="list-group-item p-3">
-                <h5>{{ lesson.order }}. {{ lesson.title }}</h5>
-                <p class="mb-0">{{ lesson.content }}</p>
-            </div>
-        {% empty %}
-            <div class="alert alert-info">
-                No lessons available for this course.
-            </div>
-        {% endfor %}
-    </div>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
